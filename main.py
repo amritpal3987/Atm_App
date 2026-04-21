@@ -22,6 +22,13 @@ class CreateUserRequest(BaseModel):
     name: str
     pin: str
 
+# home page
+
+@app.get("/")
+def home():
+    return {"message": "API is running"}
+
+
 #  Create User
 @app.post("/create_user")
 def create_user(data: CreateUserRequest):
