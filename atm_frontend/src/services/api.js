@@ -1,4 +1,4 @@
-const BASE_URL = "https://atm-app-5.onrender.com";
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 // LOGIN
 export const loginUser = async (user_id, pin) => {
