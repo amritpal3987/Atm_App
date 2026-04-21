@@ -4,6 +4,7 @@
 
 
 import { useEffect, useState } from "react";
+import { useCallback } from "react";
 import { getBalance, depositMoney, withdrawMoney, getTransactions } from "../services/api";
 
 function Dashboard({ accountId, setAccountId }) {
@@ -15,31 +16,31 @@ function Dashboard({ accountId, setAccountId }) {
     // loading and error 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+   // fetching the balance
+    const fetchBalance = useCallback(async () => {
+        if (!accountId) return;
 
-    //  FETCH BALANCE
-    const fetchBalance = async () => {
         const data = await getBalance(accountId);
         setBalance(data.balance);
-    };
+    }, [accountId]);
+    // fetching the transactions
+    const fetchTransactions = useCallback(async () => {
+        if (!accountId) return;
 
-    //  FETCH TRANSACTIONS
-    const fetchTransactions = async () => {
         try {
             const data = await getTransactions(accountId);
-
-            setTransactions(data.transactions || []);  // ✅ fallback
-
+            setTransactions(data.transactions || []);
         } catch (e) {
             console.error(e);
-            setTransactions([]);  // ✅ prevent crash
+            setTransactions([]);
         }
-    };
+    }, [accountId]);
 
     //  LOAD DATA WHEN PAGE OPENS
     useEffect(() => {
         fetchBalance();
         fetchTransactions();
-    }, []);
+    }, [fetchBalance, fetchTransactions]);
 
     // 🔹 DEPOSIT BUTTON FUNCTION
     const handleDeposit = async () => {
@@ -55,8 +56,8 @@ function Dashboard({ accountId, setAccountId }) {
 
             await depositMoney(accountId, amount);
 
-            fetchBalance();
-            fetchTransactions();
+           await fetchBalance();
+           await fetchTransactions();
 
         } catch (e) {
             setError(e.message);
@@ -79,8 +80,8 @@ function Dashboard({ accountId, setAccountId }) {
 
             await withdrawMoney(accountId, amount);
 
-            fetchBalance();
-            fetchTransactions();
+            await fetchBalance();
+            await fetchTransactions();
 
         } catch (e) {
             setError(e.message);  // shows "Insufficient balance"

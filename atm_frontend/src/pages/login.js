@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { loginUser } from "../services/api";
-import { createUser } from "../services/api";
+import { loginUser, createUser } from "../services/api";
 
 function Login({ setAccountId }) {
     const [accountId, setAccountIdInput] = useState("");
     const [pin, setPin] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-    const [userId, setUserId] = useState("");
-    //const [pin, setPin] = useState("");
 
     const handleLogin = async () => {
         if (!accountId || !pin) {
@@ -22,7 +19,7 @@ function Login({ setAccountId }) {
 
             const res = await loginUser(accountId, pin);
 
-            setAccountId(res.account_id); // move to dashboard
+            setAccountId(res.account_id);
 
         } catch (e) {
             setError("Invalid credentials");
@@ -41,9 +38,9 @@ function Login({ setAccountId }) {
                 return;
             }
 
-           const res= await createUser(name, pinInput);
+            const res = await createUser(name, pinInput);
 
-           alert(`Account created! Your ID is: ${res.account_id}`);
+            alert(`Account created! Your ID is: ${res.account_id}`);
 
         } catch (e) {
             alert("Error creating account");
@@ -69,19 +66,16 @@ function Login({ setAccountId }) {
                 color: "white"
             }}>
 
-                {/*  TITLE */}
                 <h2 style={{ textAlign: "center", marginBottom: "20px" }}>
                     🏧 ATM Login
                 </h2>
 
-                {/*  ERROR */}
                 {error && (
                     <p style={{ color: "#ef4444", textAlign: "center" }}>
                         {error}
                     </p>
                 )}
 
-                {/*  USER ID */}
                 <input
                     type="number"
                     placeholder="Enter Account ID"
@@ -96,7 +90,6 @@ function Login({ setAccountId }) {
                     }}
                 />
 
-                {/*  PIN */}
                 <input
                     type="password"
                     placeholder="Enter PIN"
@@ -111,7 +104,6 @@ function Login({ setAccountId }) {
                     }}
                 />
 
-                {/*  LOGIN BUTTON */}
                 <button
                     onClick={handleLogin}
                     disabled={loading}
@@ -129,7 +121,6 @@ function Login({ setAccountId }) {
                     {loading ? "Logging in..." : "Login"}
                 </button>
 
-                {/*  CREATE USER BUTTON */}
                 <button
                     onClick={handleCreateUser}
                     style={{
