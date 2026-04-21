@@ -15,20 +15,17 @@ class LoginRequest(BaseModel):
 
 class TransactionRequest(BaseModel):
     account_id: int
-    amount: float
+    amount: int
 
+
+class CreateUserRequest(BaseModel):
+    name: str
+    pin: str
 
 #  Create User
 @app.post("/create_user")
-def create_user(data: dict):
-    name = data.get("name")
-    pin = data.get("pin")
-
-    if not name or not pin:
-        return {"error": "Missing data"}
-
-    user_id = create_user_service(name, pin)
-
+def create_user(data: CreateUserRequest):
+    user_id = create_user_service(data.name, data.pin)
     return {"account_id": user_id}
 
 #  Login
@@ -57,17 +54,13 @@ def deposit_api(data: TransactionRequest):
 
 #  Withdraw
 @app.post("/withdraw")
-def withdraw_money(data: dict):
-    result = withdraw(data["account_id"], data["amount"])
+def withdraw_money(data: TransactionRequest):
+    result = withdraw(data.account_id, data.amount)
 
-    #  FIX HERE
-    if result is None:
-        raise HTTPException(status_code=500, detail="Internal error")
+    if result.get("error"):
+        return {"error": result["error"]}
 
-    if "error" in result:
-        raise HTTPException(status_code=400, detail=result["error"])
-
-    return result
+    return {"message": "Withdrawal successful"}
 
 #  Transactions
 @app.get("/transactions/{account_id}")
@@ -84,15 +77,15 @@ def get_transactions(account_id: int):
     conn.close()
 
     return {
-        "transactions": [
-            {
-                "type": row[0],
-                "amount": row[1],
-                "time": row[2].strftime("%Y-%m-%d %H:%M:%S")
-            }
-            for row in data
-        ]
-    }
+    "transactions": [
+        {
+            "type": row[0],
+            "amount": row[1],
+            "time": row[2].strftime("%Y-%m-%d %H:%M:%S")
+        }
+        for row in data
+    ]
+}
 
 from fastapi.middleware.cors import CORSMiddleware
 

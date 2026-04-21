@@ -15,5 +15,5 @@ CREATE TABLE transactions (
     account_id INT REFERENCES accounts(account_id),
     txn_type VARCHAR(20),
     amount NUMERIC(12,2),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
