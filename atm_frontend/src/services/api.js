@@ -28,7 +28,7 @@ export const depositMoney = async (account_id, amount) => {
 
 //  ADD THIS (Withdraw)
 export const withdrawMoney = async (account_id, amount) => {
-  const res = await fetch("https://atm-app-5.onrender.com/withdraw", {
+  const res = await fetch(`${BASE_URL}/withdraw`, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ account_id, amount })
@@ -50,7 +50,7 @@ export const getTransactions = async (account_id) => {
 };
 // for creating new user 
 export const createUser = async (name, pin) => {
-  const res = await fetch("https://atm-app-5.onrender.com/create_user", {
+  const res = await fetch(`${BASE_URL}/create_user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
