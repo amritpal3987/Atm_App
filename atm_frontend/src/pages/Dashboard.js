@@ -181,17 +181,16 @@ function Dashboard({ accountId, setAccountId }) {
                     fontSize: "14px"
                 }}>
                     {transactions.map((t, i) => (
-                        <div key={i} style={{
-                            background: "#334155",
-                            padding: "8px",
-                            borderRadius: "6px",
-                            marginBottom: "5px"
-                        }}>
-                            <div>
-                                {t.type} ₹{t.amount}
-                            </div>
-                            <small>{t.time}</small>
-                        </div>
+                        <li key={i}>
+                            {t.type === "deposit" ? "Deposit" : " Withdraw"} - ₹{t.amount}
+                            <br />
+                            <small>
+                                {new Date(t.time).toLocaleString("en-IN", {
+                                    dateStyle: "medium",
+                                    timeStyle: "short"
+                                })}
+                            </small>
+                        </li>
                     ))}
                 </div>
 
