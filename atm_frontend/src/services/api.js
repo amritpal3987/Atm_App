@@ -1,4 +1,4 @@
-const BASE_URL = "http://127.0.0.1:8000";
+const BASE_URL = "https://atm-app-5.onrender.com";
 
 // LOGIN
 export const loginUser = async (user_id, pin) => {
@@ -28,7 +28,7 @@ export const depositMoney = async (account_id, amount) => {
 
 //  ADD THIS (Withdraw)
 export const withdrawMoney = async (account_id, amount) => {
-  const res = await fetch("http://127.0.0.1:8000/withdraw", {
+  const res = await fetch("https://atm-app-5.onrender.com/withdraw", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({ account_id, amount })
@@ -50,7 +50,7 @@ export const getTransactions = async (account_id) => {
 };
 // for creating new user 
 export const createUser = async (name, pin) => {
-  const res = await fetch("http://127.0.0.1:8000/create_user", {
+  const res = await fetch("https://atm-app-5.onrender.com/create_user", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
