@@ -6,6 +6,7 @@
 import { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { getBalance, depositMoney, withdrawMoney, getTransactions } from "../services/api";
+console.log("DASHBOARD LOADED 🚀");
 
 function Dashboard({ accountId, setAccountId }) {
 
