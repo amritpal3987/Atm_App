@@ -4,7 +4,7 @@ const BASE_URL = process.env.REACT_APP_BASE_URL;
 export const loginUser = async (user_id, pin) => {
   const res = await fetch(`${BASE_URL}/login`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ user_id, pin })
   });
   return res.json();
@@ -20,17 +20,24 @@ export const getBalance = async (account_id) => {
 export const depositMoney = async (account_id, amount) => {
   const res = await fetch(`${BASE_URL}/deposit`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ account_id, amount })
   });
-  return res.json();
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw new Error(data.detail || "Deposit failed");
+  }
+
+  return data;
 };
+
 
 //  ADD THIS (Withdraw)
 export const withdrawMoney = async (account_id, amount) => {
   const res = await fetch(`${BASE_URL}/withdraw`, {
     method: "POST",
-    headers: {"Content-Type": "application/json"},
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ account_id, amount })
   });
 
