@@ -58,10 +58,7 @@ function Dashboard({ accountId, setAccountId }) {
             setSuccess("");
 
             const res = await depositMoney(accountId, amount);
-            setSuccess(res.message || "Deposit successful");
-            setTimeout(() => {
-                setSuccess("");
-            }, 2000); // success message shows for 2 seconds
+            setSuccess(res.message);
             setTimeout(async () => {
                 await fetchBalance();
                 await fetchTransactions();
