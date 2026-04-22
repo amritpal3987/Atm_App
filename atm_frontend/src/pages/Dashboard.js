@@ -86,6 +86,7 @@ function Dashboard({ accountId, setAccountId }) {
             setSuccess("");
 
             const res = await withdrawMoney(accountId, amount);
+            console.log("FULL RESPONSE 👉", res);
             setSuccess(res.message || "Withdrawal successful");
             setTimeout(() => {
                 setSuccess("");
