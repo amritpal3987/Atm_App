@@ -16,7 +16,9 @@ function Dashboard({ accountId, setAccountId }) {
     // loading and error 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
-   // fetching the balance
+    // for depositing and withdrawal success message display
+    const [success, setSuccess] = useState("");
+    // fetching the balance
     const fetchBalance = useCallback(async () => {
         if (!accountId) return;
 
@@ -53,11 +55,13 @@ function Dashboard({ accountId, setAccountId }) {
         try {
             setLoading(true);
             setError("");
+            setSuccess("");
 
-            await depositMoney(accountId, amount);
+            const res = await depositMoney(accountId, amount);
+            setSuccess(res.message || "Deposit successful");
 
-           await fetchBalance();
-           await fetchTransactions();
+            await fetchBalance();
+            await fetchTransactions();
 
         } catch (e) {
             setError(e.message);
@@ -77,9 +81,10 @@ function Dashboard({ accountId, setAccountId }) {
         try {
             setLoading(true);
             setError("");
+            setSuccess("");
 
-            await withdrawMoney(accountId, amount);
-
+            const res = await withdrawMoney(accountId, amount);
+            setSuccess(res.message || "Withdrawal successful");
             await fetchBalance();
             await fetchTransactions();
 
@@ -115,6 +120,12 @@ function Dashboard({ accountId, setAccountId }) {
                     </p>
                 )}
 
+                {success && (
+                    <p style={{ color: "lightgreen", textAlign: "center" }}>
+                        {success}
+                    </p>
+                )}
+
                 <h3 style={{ textAlign: "center", color: "#38bdf8" }}>
                     ₹{balance}
                 </h3>
@@ -123,8 +134,11 @@ function Dashboard({ accountId, setAccountId }) {
                 <input
                     type="number"
                     placeholder="Enter amount"
-                    onChange={(e) => {setAmount(Number(e.target.value));
-                        setError("");}}
+                    onChange={(e) => {
+                        setAmount(Number(e.target.value));
+                        setError("");
+                        setSuccess(""); //on typing it clear the message shown of success
+                    }}
                     style={{
                         width: "100%",
                         padding: "10px",
