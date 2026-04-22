@@ -62,8 +62,10 @@ function Dashboard({ accountId, setAccountId }) {
             setTimeout(() => {
                 setSuccess("");
             }, 2000); // success message shows for 2 seconds
-            await fetchBalance();
-            await fetchTransactions();
+            setTimeout(async () => {
+                await fetchBalance();
+                await fetchTransactions();
+            }, 500);
 
         } catch (e) {
             setError(e.message);
@@ -91,8 +93,10 @@ function Dashboard({ accountId, setAccountId }) {
             setTimeout(() => {
                 setSuccess("");
             }, 2000); // shows for 2 seconds
-            await fetchBalance();
-            await fetchTransactions();
+            setTimeout(async () => {
+                await fetchBalance();
+                await fetchTransactions();
+            }, 500);
 
         } catch (e) {
             setError(e.message || "Withdrawal failed 🫠");  // shows "Insufficient balance"
