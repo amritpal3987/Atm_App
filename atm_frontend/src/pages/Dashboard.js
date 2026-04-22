@@ -6,10 +6,10 @@
 import { useEffect, useState } from "react";
 import { useCallback } from "react";
 import { getBalance, depositMoney, withdrawMoney, getTransactions } from "../services/api";
-console.log("DASHBOARD LOADED 🚀");
+
 
 function Dashboard({ accountId, setAccountId }) {
-
+    console.log("DASHBOARD LOADED 🚀");
     //  STATE (store data)
     const [balance, setBalance] = useState(0);
     const [amount, setAmount] = useState(0);
