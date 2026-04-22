@@ -55,8 +55,11 @@ def balance_api(account_id: int):
 #  Deposit
 @app.post("/deposit")
 def deposit_api(data: TransactionRequest):
-    deposit(data.account_id, data.amount)
-    return {"message": "Deposit successful"}
+    result= deposit(data.account_id, data.amount)
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+
+    return result
 
 
 #  Withdraw

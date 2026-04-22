@@ -89,7 +89,7 @@ def deposit(account_id, amount):
         )
 
         conn.commit()
-        print("Deposit successful")
+        return {"message": "Deposit successful"} 
 
     except Exception as e:
         conn.rollback()
