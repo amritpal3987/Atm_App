@@ -84,7 +84,7 @@ function Dashboard({ accountId, setAccountId }) {
             await fetchTransactions();
 
         } catch (e) {
-            setError(e.message);  // shows "Insufficient balance"
+            setError(e.message || "Withdrawal failed 🫠");  // shows "Insufficient balance"
         } finally {
             setLoading(false);
         }
@@ -123,7 +123,8 @@ function Dashboard({ accountId, setAccountId }) {
                 <input
                     type="number"
                     placeholder="Enter amount"
-                    onChange={(e) => setAmount(Number(e.target.value))}
+                    onChange={(e) => {setAmount(Number(e.target.value));
+                        setError("");}}
                     style={{
                         width: "100%",
                         padding: "10px",
