@@ -58,7 +58,7 @@ function Dashboard({ accountId, setAccountId }) {
             setSuccess("");
 
             const res = await depositMoney(accountId, amount);
-            setSuccess(res.message);
+            setSuccess(res.message||"Deposits Successful");
             setTimeout(async () => {
                 await fetchBalance();
                 await fetchTransactions();
@@ -85,11 +85,10 @@ function Dashboard({ accountId, setAccountId }) {
             setSuccess("");
 
             const res = await withdrawMoney(accountId, amount);
-            console.log("FULL RESPONSE 👉", res);
-            setSuccess(res.message || "Withdrawal successful");
-            setTimeout(() => {
-                setSuccess("");
-            }, 2000); // shows for 2 seconds
+            setSuccess(res.message||"withdrawal successful");
+            // setTimeout(() => {
+            //     setSuccess("");
+            // }, 2000); // shows for 2 seconds
             setTimeout(async () => {
                 await fetchBalance();
                 await fetchTransactions();
