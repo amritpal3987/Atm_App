@@ -8,8 +8,18 @@ function Login({ setAccountId }) {
     const [error, setError] = useState("");
 
     const handleLogin = async () => {
-        if (!accountId || !pin) {
-            setError("Enter all details");
+        if (!accountId && !pin) {
+            setError("Please enter username and password");
+            return;
+        }
+
+        if (!accountId) {
+            setError("Please enter username");
+            return;
+        }
+
+        if (!pin) {
+            setError("Please enter password");
             return;
         }
 
@@ -19,10 +29,10 @@ function Login({ setAccountId }) {
 
             const res = await loginUser(accountId, pin);
 
-            setAccountId(res.account_id);
+            setAccountId(res.account_id); // success → go dashboard
 
         } catch (e) {
-            setError("Invalid credentials");
+            setError("Wrong username or password");
         } finally {
             setLoading(false);
         }
@@ -71,7 +81,10 @@ function Login({ setAccountId }) {
                 </h2>
 
                 {error && (
-                    <p style={{ color: "#ef4444", textAlign: "center" }}>
+                    <p style={{
+                        color: "#ef4444", textAlign: "center", marginBottom: "10px",
+                        fontWeight: "bold"
+                    }}>
                         {error}
                     </p>
                 )}
@@ -80,7 +93,7 @@ function Login({ setAccountId }) {
                     type="number"
                     placeholder="Enter Account ID"
                     value={accountId}
-                    onChange={(e) => setAccountIdInput(e.target.value)}
+                    onChange={(e) =>{setAccountIdInput(e.target.value);setError("");}}
                     style={{
                         width: "100%",
                         padding: "10px",
@@ -94,7 +107,7 @@ function Login({ setAccountId }) {
                     type="password"
                     placeholder="Enter PIN"
                     value={pin}
-                    onChange={(e) => setPin(e.target.value)}
+                    onChange={(e) => {setPin(e.target.value);setError("");}}
                     style={{
                         width: "100%",
                         padding: "10px",
