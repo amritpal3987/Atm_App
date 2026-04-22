@@ -9,12 +9,12 @@ function Login({ setAccountId }) {
 
     const handleLogin = async () => {
         if (!accountId && !pin) {
-            setError("Please enter username and password");
+            setError("Please enter Account ID and password");
             return;
         }
 
         if (!accountId) {
-            setError("Please enter username");
+            setError("Please enter Account ID");
             return;
         }
 
@@ -32,7 +32,7 @@ function Login({ setAccountId }) {
             setAccountId(res.account_id); // success → go dashboard
 
         } catch (e) {
-            setError("Wrong username or password");
+            setError("Wrong Account ID or password");
         } finally {
             setLoading(false);
         }
