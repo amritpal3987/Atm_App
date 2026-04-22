@@ -64,10 +64,10 @@ def deposit_api(data: TransactionRequest):
 def withdraw_money(data: TransactionRequest):
     result = withdraw(data.account_id, data.amount)
 
-    if result.get("error"):
-        return {"error": result["error"]}
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
 
-    return {"message": "Withdrawal successful"}
+    return result
 
 #  Transactions
 @app.get("/transactions/{account_id}")
